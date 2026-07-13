@@ -17,6 +17,7 @@ function merge(nums1, m, nums2, n) {
 
     //sort the nums1 merged array
    nums1.sort((a,b)=>a-b)
+// sort() modifies the original array (in-place).
 //    return nums1=> not return as leet code doesn't want us to return
 result=nums1
 
@@ -28,10 +29,13 @@ console.log('nums1 after merge: ', nums1) // Output: [1,2,2,3,5,6]
 
 
 // optimized approach
-let num1 = [1,2,3,0,0,0];
+let num1 = [1,2,3,0,0,0];//adrees =x01
 let num2 = [2,5,6];
 
-function mergeOptimized(num1, m, num2, n) {
+function mergeOptimized(num1, m, num2, n)
+//here num1 in parameter is a reference to the original array, so any changes made to num1 inside the function will affect the original array.
+// as address of num1 is xo1 in parameter currently
+{
     let mergedArray=Array(m+n).fill(0)// create a new array of size m+n and fill it with 0
 let i=0;//iterate on nums1
 let j=0;//iterate on nums2
@@ -66,16 +70,18 @@ while(j<n)//when nums2 has remaining elements, copy them to mergedArray as nums1
 }
 //return mergedArray =>leet code does not want us to update num1 
 
-return num1=mergedArray
+// return num1=mergedArray //here address of num1 is changed to x05 so now num1 in parameter is pointing to a new array
+// address i.e x05, so any changes made to num1 inside the function will not affect the original array.
 
 // for leet code we need to update the num1 array in place, so we can use a for loop to copy the elements of mergedArray to num1
-// for(let i=0;i<mergedArray.length;i++)
-// {
-//     num1[i]=mergedArray[i]
-// }
+for(let i=0;i<mergedArray.length;i++)
+{
+    num1[i]=mergedArray[i]//here as num1[i] is a reference to the original array, so any changes made to num1[i] inside the function will affect the original array.
+    // as the address of num1[i] is x01, so now num1 in parameter is pointing to the original array.
+}
 
 }
 
-// mergeOptimized(num1, 3, num2, 3) //use this way for leet code as it does not want us to return anything, but we need to update the num1 array in place
-// console.log('nums1 after mergeOptimized: ', num1) // Output: [1,2,2,3,5,6]//use this way for leet code as it does not want us to return anything, but we need to update the num1 array in place
-console.log(`output of mergeOptimized: ${JSON.stringify(mergeOptimized(num1, 3, num2, 3))}`); // Output: [1,2,2,3,5,6]    
+mergeOptimized(num1, 3, num2, 3) //use this way for leet code as it does not want us to return anything, but we need to update the num1 array in place
+console.log('nums1 after mergeOptimized: ', num1) // Output: [1,2,2,3,5,6]//use this way for leet code as it does not want us to return anything, but we need to update the num1 array in place
+// console.log(`output of mergeOptimized: ${JSON.stringify(mergeOptimized(num1, 3, num2, 3))}`); // Output: [1,2,2,3,5,6]    
